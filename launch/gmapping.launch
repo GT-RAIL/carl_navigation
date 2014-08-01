@@ -1,0 +1,13 @@
+<launch>	
+	<node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" respawn="false" output="screen" args="">
+		<param name="base_frame" value="/base_footprint"/>
+    	<param name="odom_frame" value="/odom"/>
+    	
+    	<param name="map_update_interval" value="0.1"/>
+	  	<param name="linearUpdate" value="0.1"/>
+	  	<param name="angularUpdate" value="0.1"/>
+	 	<param name="temporalUpdate" value="0.1"/>
+	 	<param name="particles" value="600"/>
+	    <param name="delta" value="0.025"/>
+    </node>
+</launch>
