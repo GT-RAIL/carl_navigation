@@ -7,7 +7,7 @@
 	  	<param name="linearUpdate" value="0.1"/>
 	  	<param name="angularUpdate" value="0.1"/>
 	 	<param name="temporalUpdate" value="0.1"/>
-	 	<param name="particles" value="600"/>
-	    <param name="delta" value="0.025"/>
+	 	<param name="particles" value="1000"/>
+	    <param name="delta" value="0.050"/>
     </node>
 </launch>
