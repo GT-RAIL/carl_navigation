@@ -9,7 +9,7 @@ local_costmap:
   height: 3.0
   resolution: 0.025
 
-  inflation_layer: {cost_scaling_factor: 0.0, enabled: true, inflation_radius: 0.50}
+  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.50}
 
   obstacle_layer:
     combination_method: 1
