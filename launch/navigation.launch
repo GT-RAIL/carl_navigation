@@ -1,9 +1,9 @@
 <launch>
 	<node pkg="carl_navigation" type="virtual_fence" name="virtual_fence" output="screen" respawn="true">
-		<param name="fence_x" type="double" value="0.25" />
-		<param name="fence_y" type="double" value="2.0" />
-		<param name="fence_width" type="double" value="5.8" />
-		<param name="fence_height" type="double" value="4.65" />
+		<param name="fence_x" type="double" value="0.35" />
+		<param name="fence_y" type="double" value="0.35" />
+		<param name="fence_width" type="double" value="4.1" />
+		<param name="fence_height" type="double" value="6.0" />
 		<remap from="/nav_goal" to="/move_base_simple/goal" />		
 	</node>
 	
@@ -56,7 +56,7 @@
 		<param name="clearing_rotation_allowed" value="true" />
 		<param name="prune_plan" value="false" />
  		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-		<param name="planner_frequency" value="0.8" />
+		<param name="planner_frequency" value="1.2" />
 	</node>
 	
 </launch>
