@@ -4,7 +4,7 @@
 		<param name="fence_y" type="double" value="0.35" />
 		<param name="fence_width" type="double" value="4.1" />
 		<param name="fence_height" type="double" value="6.0" />
-		<remap from="/nav_goal" to="/move_base_simple/goal" />		
+		<remap from="/nav_goal" to="/move_base/current_goal" />		
 	</node>
 	
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
