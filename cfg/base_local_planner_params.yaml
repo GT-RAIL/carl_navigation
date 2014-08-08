@@ -8,7 +8,7 @@ DWAPlannerROS:
   max_rot_vel: 1.0
   min_rot_vel: 0.2
 
-  acc_lim_theta: 10.0
+  acc_lim_theta: 5.0
   acc_limit_trans: 10.0
   acc_lim_x: 10.0
   acc_lim_y: 0.0
