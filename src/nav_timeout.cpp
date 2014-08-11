@@ -18,9 +18,9 @@ nav_timeout::nav_timeout()
   ros::NodeHandle node("~");
 
   // create the ROS topics
-  nav_goal_in = node.subscribe < geometry_msgs::PoseStamped > ("/nav_goal", 10, &nav_timeout::goalCallback, this);
+  nav_goal_in = node.subscribe < geometry_msgs::PoseStamped > ("nav_goal", 10, &nav_timeout::goalCallback, this);
   nav_goal_result = node.subscribe < move_base_msgs::MoveBaseActionResult
-      > ("/nav_goal_result", 10, &nav_timeout::goalResultCallback, this);
+      > ("nav_goal_result", 10, &nav_timeout::goalResultCallback, this);
 
   // Connect to the move_base action server
   actionClient = new ActionClient("move_base", true); // create a thread to handle subscriptions.
