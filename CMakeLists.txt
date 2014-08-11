@@ -96,10 +96,12 @@ include_directories(
 ## Declare a cpp executable
 add_executable(virtual_fence src/virtual_fence.cpp)
 add_executable(odom_covariance_converter src/odom_covariance_converter.cpp)
+add_executable(nav_timeout src/nav_timeout.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(odom_covariance_converter ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(virtual_fence ${catkin_LIBRARIES})
+target_link_libraries(nav_timeout ${catkin_LIBRARIES})
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
