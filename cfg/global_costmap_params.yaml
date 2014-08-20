@@ -12,7 +12,7 @@ global_costmap:
   obstacle_layer:
     observation_sources: laser_scan_sensor
 
-  static_layer: {map_topic: /markers_to_map/ar_localization_map}
+  static_layer: {map_topic: /map}
 
   ar_layer: {map_topic: /markers_to_map/ar_global_cost_map}
 
