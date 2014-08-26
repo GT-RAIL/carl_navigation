@@ -15,4 +15,7 @@
   <url type="repository">https://github.com/WPI-RAIL/carl_navigation</url>
  
   <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>gmapping</run_depend>
+  <run_depend>carl_description</run_depend>
 </package>
