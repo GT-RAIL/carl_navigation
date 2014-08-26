@@ -2,28 +2,17 @@
 <package>
   <name>carl_navigation</name>
   <version>0.0.0</version>
-  <description>Implementation of ROS navigation stack for CARL</description>
+  <description>Autonomous Navigation Capabilities for CARL</description>
   
-  <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
+  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
+  <author email="rctoris@wpi.edu">Russell Toris</author>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
+  
   <license>BSD</license>
 
-  <url type="website">http://ros.org/wiki/carl_nav</url>
+  <url type="website">http://ros.org/wiki/carl_navigation</url>
   <url type="bugtracker">https://github.com/WPI-RAIL/carl_navigation/issues</url>
   <url type="repository">https://github.com/WPI-RAIL/carl_navigation</url>
  
   <buildtool_depend>catkin</buildtool_depend>
-  
-  <build_depend>roscpp</build_depend>
-  <build_depend>boost</build_depend>
-  
-  <run_depend>roscpp</run_depend>
-  <run_depend>boost</run_depend>
-  <run_depend>carl_description</run_depend>  
-  <run_depend>gmapping</run_depend>
-  <run_depend>move_base</run_depend>
-  <run_depend>amcl</run_depend>
-  <run_depend>robot_pose_ekf</run_depend>
-  <run_depend>fovis_ros</run_depend>
-    
 </package>
