@@ -28,3 +28,8 @@ install(DIRECTORY launch/
 install(DIRECTORY rviz/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
 )
+
+## Copy config files
+install(DIRECTORY config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+)

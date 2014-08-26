@@ -1,0 +1,5 @@
+footprint: [[0.472, .319], [-0.235, 0.319], [-0.235, -0.319], [0.472, -0.319]]
+recovery_behavior_enabled: false
+clearing_rotation_allowed: false
+base_global_planner: navfn/NavfnROS
+base_local_planner: dwa_local_planner/DWAPlannerROS
