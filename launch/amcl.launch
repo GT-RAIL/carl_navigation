@@ -14,11 +14,11 @@
   <arg name="max_particles" value="2000" />
   <arg name="kld_err" value="0.05" />
   <arg name="kld_z" value="0.99" />
-  <arg name="odom_alpha1" value="0.1" />
-  <arg name="odom_alpha2" value="0.1" />
-  <arg name="odom_alpha3" value="0.1" />
-  <arg name="odom_alpha4" value="0.1" />
-  <arg name="odom_alpha5" value="0.1" />
+  <arg name="odom_alpha1" value="0.5" />
+  <arg name="odom_alpha2" value="0.5" />
+  <arg name="odom_alpha3" value="0.5" />
+  <arg name="odom_alpha4" value="0.5" />
+  <arg name="odom_alpha5" value="0.5" />
   <arg name="laser_z_hit" value="0.5" />
   <arg name="laser_z_short" value="0.05" />
   <arg name="laser_z_max" value="0.05" />
