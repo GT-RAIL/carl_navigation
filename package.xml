@@ -6,7 +6,6 @@
   
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
   <author email="rctoris@wpi.edu">Russell Toris</author>
-  <author email="spkordell@wpi.edu">Steven Kordell</author>
   
   <license>BSD</license>
 
@@ -21,4 +20,5 @@
   <run_depend>navfn</run_depend>
   <run_depend>dwa_local_planner</run_depend>
   <run_depend>carl_description</run_depend>
+  <run_depend>rail_maps</run_depend>
 </package>

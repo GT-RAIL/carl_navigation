@@ -1,0 +1,26 @@
+<!--
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: August 27, 2014
+-->
+
+<launch>  
+  <!-- Maps -->
+  <arg name="ilab" default="true" />
+  <arg name="ilab_full" default="false" />
+  <arg name="rail_lab_map" default="$(find rail_maps)/maps/rail_lab.yaml" />
+  <arg name="ilab_map" default="$(find rail_maps)/maps/ilab.yaml" />
+
+  <!-- Map Server -->
+  <group if="$(arg ilab)">
+    <group if="$(arg ilab_full)">
+      <node pkg="map_server" name="map_server" type="map_server" args="$(arg ilab_map)" />
+    </group>
+    <group unless="$(arg ilab_full)">
+      <node pkg="map_server" name="map_server" type="map_server" args="$(arg rail_lab_map)" />
+    </group>
+  </group>
+
+  <!-- Navigation -->
+  <include file="$(find carl_navigation)/amcl.launch" />
+  <include file="$(find carl_navigation)/move_base.launch" />
+</launch>
