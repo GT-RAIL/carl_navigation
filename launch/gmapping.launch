@@ -4,70 +4,10 @@
 -->
 
 <launch>
-  <!-- Mapping Parameters -->
-  <arg name="base_frame" value="/base_footprint"/>
-  <arg name="odom_frame" value="odom"/>
-  <arg name="map_update_interval" value="30.0"/>
-  <arg name="maxUrange" value="5.0"/>
-  <arg name="sigma" value="0.05"/>
-  <arg name="kernelSize" value="1"/>
-  <arg name="lstep" value="0.05"/>
-  <arg name="astep" value="0.05"/>
-  <arg name="iterations" value="5"/>
-  <arg name="lsigma" value="0.075"/>
-  <arg name="ogain" value="3.0"/>
-  <arg name="lskip" value="0"/>
-  <arg name="srr" value="0.01"/>
-  <arg name="srt" value="0.02"/>
-  <arg name="str" value="0.01"/>
-  <arg name="stt" value="0.02"/>
-  <arg name="linearUpdate" value="0.5"/>
-  <arg name="angularUpdate" value="0.436"/>
-  <arg name="temporalUpdate" value="-1.0"/>
-  <arg name="resampleThreshold" value="0.5"/>
-  <arg name="particles" value="80"/>
-  <arg name="xmin" value="-50.0"/>
-  <arg name="ymin" value="-50.0"/>
-  <arg name="xmax" value="50.0"/>
-  <arg name="ymax" value="50.0"/>
-  <arg name="delta" value="0.05"/>
-  <arg name="llsamplerange" value="0.01"/>
-  <arg name="llsamplestep" value="0.01"/>
-  <arg name="lasamplerange" value="0.005"/>
-  <arg name="lasamplestep" value="0.005"/>
-  <arg name="scan" value="scan"/>
+  <arg name="scan_topic" value="scan"/>
 
   <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
-    <param name="base_frame" value="$(arg base_frame)"/>
-    <param name="odom_frame" value="$(arg odom_frame)"/>
-    <param name="map_update_interval" value="$(arg map_update_interval)"/>
-    <param name="maxUrange" value="$(arg maxUrange)"/>
-    <param name="sigma" value="$(arg sigma)"/>
-    <param name="kernelSize" value="$(arg kernelSize)"/>
-    <param name="lstep" value="$(arg lstep)"/>
-    <param name="astep" value="$(arg astep)"/>
-    <param name="iterations" value="$(arg iterations)"/>
-    <param name="lsigma" value="$(arg lsigma)"/>
-    <param name="ogain" value="$(arg ogain)"/>
-    <param name="lskip" value="$(arg lskip)"/>
-    <param name="srr" value="$(arg srr)"/>
-    <param name="srt" value="$(arg srt)"/>
-    <param name="str" value="$(arg str)"/>
-    <param name="stt" value="$(arg stt)"/>
-    <param name="linearUpdate" value="$(arg linearUpdate)"/>
-    <param name="angularUpdate" value="$(arg angularUpdate)"/>
-    <param name="temporalUpdate" value="$(arg temporalUpdate)"/>
-    <param name="resampleThreshold" value="$(arg resampleThreshold)"/>
-    <param name="particles" value="$(arg particles)"/>
-    <param name="xmin" value="$(arg xmin)"/>
-    <param name="ymin" value="$(arg ymin)"/>
-    <param name="xmax" value="$(arg xmax)"/>
-    <param name="ymax" value="$(arg ymax)"/>
-    <param name="delta" value="$(arg delta)"/>
-    <param name="llsamplerange" value="$(arg llsamplerange)"/>
-    <param name="llsamplestep" value="$(arg llsamplestep)"/>
-    <param name="lasamplerange" value="$(arg lasamplerange)"/>
-    <param name="lasamplestep" value="$(arg lasamplestep)"/>
-    <remap from="scan" to="$(arg scan)" />
+    <rosparam file="$(find carl_navigation)/config/gmapping_params.yaml" command="load" />
+    <remap from="scan" to="$(arg scan_topic)" />
   </node>
 </launch>
