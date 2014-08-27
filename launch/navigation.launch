@@ -21,6 +21,6 @@
   </group>
 
   <!-- Navigation -->
-  <include file="$(find carl_navigation)/amcl.launch" />
-  <include file="$(find carl_navigation)/move_base.launch" />
+  <include file="$(find carl_navigation)/launch/amcl.launch" />
+  <include file="$(find carl_navigation)/launch/move_base.launch" />
 </launch>
