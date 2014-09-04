@@ -2,6 +2,11 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.2 (2014-09-04)
+------------------
+* robot_pose_publisher now launched with AMCL
+* Contributors: Russell Toris
+
 0.0.1 (2014-08-27)
 ------------------
 * fixed launch file location
