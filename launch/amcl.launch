@@ -15,4 +15,5 @@
     <remap from="map" to="$(arg map_topic)" />
     <remap from="static_map" to="$(arg static_map_service)" />
   </node>
+  <node name="robot_pose_publisher" pkg="robot_pose_publisher" type="robot_pose_publisher" />
 </launch>

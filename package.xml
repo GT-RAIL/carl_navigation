@@ -21,4 +21,5 @@
   <run_depend>dwa_local_planner</run_depend>
   <run_depend>carl_description</run_depend>
   <run_depend>rail_maps</run_depend>
+  <run_depend>robot_pose_publisher</run_depend>
 </package>
