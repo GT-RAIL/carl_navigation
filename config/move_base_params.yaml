@@ -1,4 +1,4 @@
-footprint: [[0.472, .319], [-0.235, 0.319], [-0.235, -0.319], [0.472, -0.319]]
+footprint: [[-0.4, -0.3], [0.3, -0.3], [0.3, 0.3], [-0.4, 0.3]]
 recovery_behavior_enabled: true
 clearing_rotation_allowed: true
 base_global_planner: navfn/NavfnROS
