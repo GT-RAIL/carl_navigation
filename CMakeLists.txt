@@ -4,7 +4,7 @@ project(carl_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -15,9 +15,39 @@ find_package(catkin REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package()
 
+###########
+## Build ##
+###########
+
+## Specify additional locations of header files
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+)
+
+## Declare a cpp executable
+add_executable(rail_lab_location_server src/rail_lab_location_server.cpp src/location.cpp)
+
+## Specify libraries to link a library or executable target against
+target_link_libraries(rail_lab_location_server
+  ${catkin_LIBRARIES}
+  yaml-cpp
+)
+
 #############
 ## Install ##
 #############
+
+## Mark executables and/or libraries for installation
+install(TARGETS rail_lab_location_server
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Copy header files
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h"
+)
 
 ## Copy launch files
 install(DIRECTORY launch/

@@ -1,0 +1,12 @@
+# Pre-defined locations
+int32 KITCHEN_TABLE=1
+int32 KITCHEN_DRAWERS=2
+int32 FRIDGE=3
+
+# Goal definition
+int32 location
+---
+# Result definition
+---
+# Feedback definition
+geometry_msgs/PoseStamped base_position
