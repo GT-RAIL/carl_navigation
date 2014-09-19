@@ -56,7 +56,7 @@ rail_lab_location_server::rail_lab_location_server() :
   // wait for the action server to start TODO
   //move_base_.waitForServer();
 
-  ROS_INFO("CARL High Level Navigation Initialized with %d Locations", locations_.size());
+  ROS_INFO("CARL High Level Navigation Initialized with %d Locations", (int) locations_.size());
 }
 
 int main(int argc, char **argv)

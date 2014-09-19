@@ -4,7 +4,25 @@ project(carl_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs message_generation)
+
+#######################################
+## Declare ROS messages and services ##
+#######################################
+
+## Generate actions in the 'action' folder
+add_action_files(
+  FILES
+  MoveCarl.action
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  actionlib_msgs
+  geometry_msgs
+)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -33,6 +51,8 @@ target_link_libraries(rail_lab_location_server
   ${catkin_LIBRARIES}
   yaml-cpp
 )
+
+add_dependencies(rail_lab_location_server ${PROJECT_NAME}_gencpp)
 
 #############
 ## Install ##
