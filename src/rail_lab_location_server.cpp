@@ -8,6 +8,7 @@
  * \date September 19, 2014
  */
 #include <carl_navigation/rail_lab_location_server.hpp>
+#include <move_base_msgs/MoveBaseActionGoal.h>
 #include <ros/package.h>
 #include <yaml-cpp/yaml.h>
 #include <sstream>
@@ -15,8 +16,8 @@
 using namespace std;
 
 rail_lab_location_server::rail_lab_location_server() :
-    move_base_("move_base", true)//,
-    //as_(node_, )
+    move_base_("move_base", true), as_(node_, "move_carl", boost::bind(&rail_lab_location_server::execute, this, _1),
+                                       false)
 {
   // private node handle
   ros::NodeHandle private_nh("~");
@@ -54,10 +55,93 @@ rail_lab_location_server::rail_lab_location_server() :
   }
 
   ROS_INFO("Connection to CARL low-level navigation...");
-  // wait for the action server to start TODO
-  //move_base_.waitForServer();
+  // wait for the action server to start
+  move_base_.waitForServer();
 
-  ROS_INFO("CARL High Level Navigation Initialized with %d Locations", (int) locations_.size());
+  // start the action server
+  as_.start();
+
+  ROS_INFO("CARL High Level Navigation Initialized with %d Locations", (int ) locations_.size());
+}
+
+void rail_lab_location_server::execute(const carl_navigation::MoveCarlGoalConstPtr &goal)
+{
+  // search for the location
+  int location_id = goal->location;
+  int index = -1;
+  for (uint i = 0; i < locations_.size(); i++)
+  {
+    if (locations_.at(i).get_id() == location_id)
+    {
+      index = i;
+      break;
+    }
+  }
+
+  // attempt to run the navigation
+  bool success = false;
+  if (index >= 0)
+  {
+    ROS_INFO("Attempting to move CARL to '%s'", locations_[index].get_name().c_str());
+
+    // setup the goal
+    move_base_msgs::MoveBaseGoal goal;
+    goal.target_pose.header.frame_id = "map";
+    goal.target_pose.pose = locations_[index].get_pose();
+
+    // send the goal
+    move_base_.sendGoal(goal, boost::bind(&rail_lab_location_server::done, this, _1, _2),
+                        boost::bind(&rail_lab_location_server::active, this),
+                        boost::bind(&rail_lab_location_server::feedback, this, _1));
+
+    while (!move_base_.getState().isDone())
+    {
+      // check if we should cancel
+      if (as_.isPreemptRequested() || as_.isNewGoalAvailable() || !ros::ok())
+      {
+        ROS_INFO("Canceling move CARL goals...");
+        move_base_.cancelAllGoals();
+        as_.setPreempted();
+      }
+    }
+  }
+  else
+  {
+    ROS_INFO("Unknown location ID.");
+    as_.setAborted(result_);
+  }
+}
+
+void rail_lab_location_server::done(const actionlib::SimpleClientGoalState& state,
+                                    const move_base_msgs::MoveBaseResultConstPtr &result)
+{
+  if (state == actionlib::SimpleClientGoalState::SUCCEEDED)
+  {
+    ROS_INFO("Move CARL Succeeded");
+    as_.setSucceeded(result_);
+  }
+  else if (state == actionlib::SimpleClientGoalState::PREEMPTED)
+  {
+    ROS_INFO("Low-level navigation canceled.");
+    as_.setPreempted(result_);
+  }
+  else
+  {
+    ROS_INFO("Move CARL Failed");
+    as_.setAborted(result_);
+  }
+}
+
+void rail_lab_location_server::active()
+{
+  ROS_INFO("Low-level navigation goal activated.");
+}
+
+void rail_lab_location_server::feedback(const move_base_msgs::MoveBaseFeedbackConstPtr &feedback)
+{
+  // forward the feedback
+  feedback_.base_position = feedback->base_position;
+  as_.publishFeedback(feedback_);
 }
 
 int main(int argc, char **argv)

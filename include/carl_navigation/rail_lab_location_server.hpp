@@ -17,6 +17,8 @@
 #include <move_base_msgs/MoveBaseAction.h>
 #include <carl_navigation/location.hpp>
 #include <carl_navigation/MoveCarlAction.h>
+#include <carl_navigation/MoveCarlActionGoal.h>
+#include <carl_navigation/MoveCarlActionResult.h>
 #include <vector>
 
 /*!
@@ -36,9 +38,38 @@ public:
   rail_lab_location_server();
 
 private:
+  /*!
+   * The main action server execution method. A call to move_base will be made from here.
+   *
+   * \param goal The current goal.
+   */
+  void execute(const carl_navigation::MoveCarlGoalConstPtr &goal);
+
+  /*!
+   * The move_base finished callback.
+   *
+   * \param state The final state.
+   * \param result The result from move_base.
+   */
+  void done(const actionlib::SimpleClientGoalState& state, const move_base_msgs::MoveBaseResultConstPtr &result);
+
+  /*!
+   * The activation callback from move_base.
+   */
+  void active();
+
+  /*!
+   * The feedback callback from move_base.
+   *
+   * \param feedback The feedback from move_base.
+   */
+  void feedback(const move_base_msgs::MoveBaseFeedbackConstPtr &feedback);
+
   ros::NodeHandle node_; /*!< a handle for this ROS node */
   actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> move_base_; /*!< move_base action client */
-  //actionlib::SimpleActionServer<carl_navigation::MoveCarlAction> as_; /*!< main action server */
+  actionlib::SimpleActionServer<carl_navigation::MoveCarlAction> as_; /*!< main action server */
+  carl_navigation::MoveCarlResult result_; /*!< shared result */
+  carl_navigation::MoveCarlFeedback feedback_; /*!< shared feedback */
   std::vector<location> locations_; /*!< pre-defined locations */
 };
 
