@@ -13,8 +13,10 @@
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
+#include <actionlib/server/simple_action_server.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <carl_navigation/location.hpp>
+#include <carl_navigation/MoveCarlAction.h>
 #include <vector>
 
 /*!
@@ -36,6 +38,7 @@ public:
 private:
   ros::NodeHandle node_; /*!< a handle for this ROS node */
   actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> move_base_; /*!< move_base action client */
+  actionlib::SimpleActionServer<carl_navigation::MoveCarlAction> as_; /*!< main action server */
   std::vector<location> locations_; /*!< pre-defined locations */
 };
 
