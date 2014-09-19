@@ -15,7 +15,8 @@
 using namespace std;
 
 rail_lab_location_server::rail_lab_location_server() :
-    move_base_("move_base", true)
+    move_base_("move_base", true)//,
+    //as_(node_, )
 {
   // private node handle
   ros::NodeHandle private_nh("~");

@@ -38,7 +38,7 @@ public:
 private:
   ros::NodeHandle node_; /*!< a handle for this ROS node */
   actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> move_base_; /*!< move_base action client */
-  actionlib::SimpleActionServer<carl_navigation::MoveCarlAction> as_; /*!< main action server */
+  //actionlib::SimpleActionServer<carl_navigation::MoveCarlAction> as_; /*!< main action server */
   std::vector<location> locations_; /*!< pre-defined locations */
 };
 
