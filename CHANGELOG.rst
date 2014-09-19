@@ -2,6 +2,16 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2014-09-19)
+------------------
+* final version of location server
+* build fix
+* travis fix test
+* message generation added
+* started carl navigation
+* footprint updated
+* Contributors: Russell Toris
+
 0.0.2 (2014-09-04)
 ------------------
 * robot_pose_publisher now launched with AMCL
