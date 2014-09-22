@@ -301,7 +301,7 @@ Visualization Manager:
       Show Axes: false
       Show Descriptions: true
       Show Visual Aids: false
-      Update Topic: /jaco_interactive_manipulation/update
+      Update Topic: /carl_interactive_manipulation/update
       Value: true
     - Alpha: 0.8
       Class: rviz/Map
