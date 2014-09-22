@@ -2,6 +2,14 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2014-09-22)
+------------------
+* added jaco_description support
+* Merge branch 'develop' of github.com:WPI-RAIL/carl_navigation into develop
+* travis only builds carl_description instead of entire robot
+* rviz config update for new interactive marker server
+* Contributors: Russell Toris, dekent
+
 0.0.3 (2014-09-19)
 ------------------
 * final version of location server
