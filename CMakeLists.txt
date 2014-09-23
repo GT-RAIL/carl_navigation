@@ -5,6 +5,7 @@ project(carl_navigation)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs message_generation)
+find_package(PkgConfig)
 
 #######################################
 ## Declare ROS messages and services ##
@@ -37,11 +38,19 @@ catkin_package()
 ## Build ##
 ###########
 
+## Check for what version of YAML we have
+pkg_check_modules(YAML_CPP yaml-cpp)
+if(${YAML_CPP_VERSION} VERSION_GREATER 0.5)
+  add_definitions(-DYAMLCPP_GT_0_5_0)
+endif()
+
 ## Specify additional locations of header files
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIRS}
 )
+link_directories(${YAML_CPP_LIBRARY_DIRS})
 
 ## Declare a cpp executable
 add_executable(rail_lab_location_server src/rail_lab_location_server.cpp src/location.cpp)

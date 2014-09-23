@@ -30,6 +30,12 @@ install:
   - rm -rf carl_bot wpi_jaco
   - cd ../
   - rosdep install --from-paths src --ignore-src --rosdistro hydro -y
+
+script:
+  - source /opt/ros/hydro/setup.bash
+  - catkin_make
+  - catkin_make install
+  - rm -rf build/ devel/ install/
   - sudo apt-get purge yaml-cpp
   - mkdir yaml
   - cd yaml/
@@ -43,8 +49,6 @@ install:
   - sudo make install
   - cd ../../../
   - rm -rf yaml
-
-script:
-  - source /opt/ros/hydro/setup.bash
   - catkin_make
   - catkin_make install
+

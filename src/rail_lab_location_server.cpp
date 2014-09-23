@@ -29,6 +29,8 @@ rail_lab_location_server::rail_lab_location_server() :
   private_nh.param("locations_config", file, ss.str());
 
   // parse the configuration file
+
+#ifdef YAMLCPP_GT_0_5_0
   YAML::Node config = YAML::LoadFile(file);
   for (size_t i = 0; i < config.size(); i++)
   {
@@ -53,6 +55,31 @@ rail_lab_location_server::rail_lab_location_server() :
     // store the location
     locations_.push_back(location(id, name, pose));
   }
+#else
+  YAML::Parser parser(fstream(file.c_str()));
+  YAML::Node config;
+  parser.GetNextDocument(config);
+  for (size_t i = 0; i < config.size(); i++)
+  {
+    int id;
+    config[i]["position"] >> id;
+    string name;
+    config[i]["position"] >> name;
+
+    geometry_msgs::Pose pose;
+    const YAML::Node &position = config[i]["position"];
+    position[0] >> pose.position.x;
+    position[1] >> pose.position.y;
+    position[2] >> pose.position.z;
+    const YAML::Node &orientation = config[i]["orientation"];
+    orientation[0] >> pose.orientation.x;
+    orientation[1] >> pose.orientation.y;
+    orientation[2] >> pose.orientation.z;
+    orientation[3] >> pose.orientation.w;
+
+    locations_.push_back(location(id, name, pose));
+  }
+#endif
 
   ROS_INFO("Connection to CARL low-level navigation...");
   // wait for the action server to start
