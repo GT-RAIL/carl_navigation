@@ -2,6 +2,13 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.5 (2014-09-23)
+------------------
+* parser for yaml file
+* fstream included
+* checks made for yaml-cpp version during compile
+* Contributors: Russell Toris
+
 0.0.4 (2014-09-22)
 ------------------
 * added jaco_description support
