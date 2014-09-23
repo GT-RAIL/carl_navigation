@@ -12,6 +12,7 @@
 #include <ros/package.h>
 #include <yaml-cpp/yaml.h>
 #include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -56,7 +57,7 @@ rail_lab_location_server::rail_lab_location_server() :
     locations_.push_back(location(id, name, pose));
   }
 #else
-  YAML::Parser parser(fstream(file.c_str()));
+  YAML::Parser parser(ifstream(file.c_str()));
   YAML::Node config;
   parser.GetNextDocument(config);
   for (size_t i = 0; i < config.size(); i++)
