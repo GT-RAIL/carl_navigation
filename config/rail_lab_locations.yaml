@@ -1,6 +1,6 @@
 - id: 1
   name: Kitchen Table
-  position: [3.752, 4.600, 0.000]
+  position: [3.800, 4.600, 0.000]
   orientation: [0.000, 0.00, 0.698, 0.716]
 - id: 2
   name: Kitchen Drawers
@@ -8,5 +8,5 @@
   orientation: [0.000, 0.00, 0.698, 0.716]
 - id: 3
   name: Fridge
-  position: [2.114, 5.000, 0.000]
+  position: [2.100, 5.000, 0.000]
   orientation: [0.000, 0.00, 0.698, 0.716]
