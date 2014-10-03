@@ -2,6 +2,16 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.6 (2014-10-03)
+------------------
+* no more checks
+* error in pose
+* tuning for rail locations
+* tuning for lab locations
+* tuning for lab locations
+* tuning for lab locations
+* Contributors: Russell Toris
+
 0.0.5 (2014-09-23)
 ------------------
 * parser for yaml file
