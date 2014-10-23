@@ -2,6 +2,11 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.7 (2014-10-23)
+------------------
+* navigation marker fix
+* Contributors: Russell Toris
+
 0.0.6 (2014-10-03)
 ------------------
 * no more checks
