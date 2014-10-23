@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>carl_navigation</name>
-  <version>0.0.6</version>
+  <version>0.0.7</version>
   <description>Autonomous Navigation Capabilities for CARL</description>
   
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
