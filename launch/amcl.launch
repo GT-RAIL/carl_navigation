@@ -1,5 +1,6 @@
 <!--
    Author: Russell Toris, Worcester Polytechnic Institute
+   Author: David Kent, Worcester Polytechnic Institute
   Version: August 26, 2014
 -->
 
@@ -8,7 +9,7 @@
   <arg name="static_map_service" default="static_map" />
   <arg name="map_topic" default="map" />
   <arg name="scan_topic" default="scan" />
-
+  
   <node pkg="amcl" name="amcl" type="amcl">
     <rosparam file="$(find carl_navigation)/config/amcl_params.yaml" command="load" />
     <remap from="scan" to="$(arg scan_topic)" />   

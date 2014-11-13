@@ -1,14 +1,16 @@
 <!--
    Author: Russell Toris, Worcester Polytechnic Institute
+   Author: David Kent, Worcester Polytechnic Institute
   Version: August 26, 2014
 -->
 
 <launch>
+  <arg name="global_costmap_file" default="$(find carl_navigation)/config/global_costmap_params.yaml" />
   <node pkg="move_base" name="move_base" type="move_base" output="screen">
     <!-- Loaded Params -->
     <rosparam file="$(find carl_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find carl_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find carl_navigation)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(arg global_costmap_file)" command="load" />
     <rosparam file="$(find carl_navigation)/config/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find carl_navigation)/config/move_base_params.yaml" command="load" />
     <rosparam file="$(find carl_navigation)/config/dwa_local_planner_params.yaml" command="load" />

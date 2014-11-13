@@ -1,0 +1,22 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+  Version: November 12, 2014
+-->
+
+<launch>  
+  <!-- Maps -->
+  <arg name="rail_lab_map" default="$(find rail_maps)/maps/rail_lab_no_furniture.yaml" />
+  <arg name="map_namespace" default="map_server" />
+
+  <!-- Map Server -->
+  <node pkg="map_server" name="map_server" type="map_server" ns="$(arg map_namespace)" args="$(arg rail_lab_map)" />
+
+  <!-- Map republisher -->
+  <node pkg="carl_navigation" name="map_republisher" type="map_republisher"  />
+
+  <!-- Navigation -->
+  <include file="$(find carl_navigation)/launch/amcl.launch" />
+  <include file="$(find carl_navigation)/launch/move_base.launch">
+    <arg name="global_costmap_file" value="$(find carl_navigation)/config/global_costmap_params_dynamic.yaml" />
+  </include>
+</launch>

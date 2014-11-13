@@ -4,12 +4,24 @@ project(carl_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs message_generation costmap_2d dynamic_reconfigure std_msgs nav_msgs)
 find_package(PkgConfig)
 
 #######################################
 ## Declare ROS messages and services ##
 #######################################
+
+add_message_files(
+  FILES
+  BlockedCells.msg
+  Obstacle.msg
+  Obstacles.msg
+)
+
+add_service_files(
+  FILES
+  GetAllObstacles.srv
+)
 
 ## Generate actions in the 'action' folder
 add_action_files(
@@ -54,14 +66,20 @@ link_directories(${YAML_CPP_LIBRARY_DIRS})
 
 ## Declare a cpp executable
 add_executable(rail_lab_location_server src/rail_lab_location_server.cpp src/location.cpp)
+add_executable(map_republisher src/map_republisher.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(rail_lab_location_server
   ${catkin_LIBRARIES}
   yaml-cpp
 )
+target_link_libraries(map_republisher ${catkin_LIBRARIES})
+
+add_library(furniture_layer src/furniture_layer.cpp)
 
 add_dependencies(rail_lab_location_server ${PROJECT_NAME}_gencpp)
+add_dependencies(furniture_layer ${PROJECT_NAME}_gencpp)
+add_dependencies(map_republisher ${PROJECT_NAME}_gencpp)
 
 #############
 ## Install ##

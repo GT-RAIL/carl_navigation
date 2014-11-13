@@ -1,0 +1,5 @@
+<library path="lib/libfurniture_layer">
+  <class type="furniture_layer_namespace::FurnitureLayer" base_class_type="costmap_2d::Layer">
+    <description>TODO</description>
+  </class>
+</library>
