@@ -4,7 +4,7 @@ project(carl_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib move_base_msgs std_msgs geometry_msgs roslib actionlib_msgs message_generation costmap_2d dynamic_reconfigure std_msgs nav_msgs)
+find_package(catkin REQUIRED COMPONENTS actionlib actionlib_msgs costmap_2d dynamic_reconfigure geometry_msgs message_generation move_base_msgs nav_msgs roscpp roslib std_msgs)
 find_package(PkgConfig)
 
 #######################################
@@ -32,9 +32,9 @@ add_action_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs
   actionlib_msgs
   geometry_msgs
+  std_msgs
 )
 
 ###################################################

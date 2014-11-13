@@ -1,3 +1,14 @@
+/*!
+ * \file furniture_layer.h
+ * \brief Costmap layer for representing moveable furniture.
+ *
+ * Furniture includes both a navigation footprint for use in path planning, and a localization footprint that represents
+ * what will be seen on CARL's laser scan.
+ *
+ * \author David Kent, WPI - davidkent@wpi.edu
+ * \date October 22, 2014
+ */
+
 #ifndef FURNITURE_LAYER_H_
 #define FURNITURE_LAYER_H_
 #include <ros/ros.h>
@@ -36,7 +47,7 @@ private:
   *
   * @param obs list of obstacle polygons with associated ids
   */
-  void update_furniture_callback(const carl_navigation::Obstacles::ConstPtr &obs);
+  void updateFurnitureCallback(const carl_navigation::Obstacles::ConstPtr &obs);
   
   ros::Subscriber obstacleSubscriber;
   ros::Publisher localizationGridPublisher;

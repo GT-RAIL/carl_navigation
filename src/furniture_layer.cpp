@@ -32,14 +32,14 @@ void FurnitureLayer::onInitialize()
   prevMinX = std::numeric_limits<double>::max();
   prevMinY = std::numeric_limits<double>::max();
 
-  obstacleSubscriber = nh.subscribe<carl_navigation::Obstacles>("update_furniture_layer", 1, &FurnitureLayer::update_furniture_callback, this);
+  obstacleSubscriber = nh.subscribe<carl_navigation::Obstacles>("update_furniture_layer", 1, &FurnitureLayer::updateFurnitureCallback, this);
 
   localizationGridPublisher = nh.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
 
   navigationObstacles.clear();
 }
 
-void FurnitureLayer::update_furniture_callback(const carl_navigation::Obstacles::ConstPtr &obs)
+void FurnitureLayer::updateFurnitureCallback(const carl_navigation::Obstacles::ConstPtr &obs)
 {
   //update navigation obstacles
   if (!obs->navigationObstacles.empty())
