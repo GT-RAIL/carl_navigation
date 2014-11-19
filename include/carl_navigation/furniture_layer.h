@@ -48,9 +48,15 @@ private:
   * @param obs list of obstacle polygons with associated ids
   */
   void updateFurnitureCallback(const carl_navigation::Obstacles::ConstPtr &obs);
-  
+
+  void getInitialObstacles();
+
+  ros::NodeHandle n;
+
   ros::Subscriber obstacleSubscriber;
   ros::Publisher localizationGridPublisher;
+
+  ros::ServiceClient initialObstaclesClient;
   
   bool updateReceived;
   std::vector<carl_navigation::Obstacle> navigationObstacles; //obstacle list for the navigation map

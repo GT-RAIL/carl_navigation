@@ -1,5 +1,6 @@
 #include <carl_navigation/furniture_layer.h>
 #include <pluginlib/class_list_macros.h>
+#include <carl_navigation/GetAllObstacles.h>
 
 PLUGINLIB_EXPORT_CLASS(furniture_layer_namespace::FurnitureLayer, costmap_2d::Layer)
 
@@ -32,11 +33,63 @@ void FurnitureLayer::onInitialize()
   prevMinX = std::numeric_limits<double>::max();
   prevMinY = std::numeric_limits<double>::max();
 
+  localizationObstacles.clear();
+  navigationObstacles.clear();
+
+  initialObstaclesClient = n.serviceClient<carl_navigation::GetAllObstacles>("furniture_tracker/getAllPoses");
+  initialObstaclesClient.waitForExistence();
+  this->getInitialObstacles();
+
   obstacleSubscriber = nh.subscribe<carl_navigation::Obstacles>("update_furniture_layer", 1, &FurnitureLayer::updateFurnitureCallback, this);
 
   localizationGridPublisher = nh.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
+}
 
-  navigationObstacles.clear();
+void FurnitureLayer::getInitialObstacles()
+{
+  carl_navigation::GetAllObstaclesRequest req;
+  carl_navigation::GetAllObstaclesResponse res;
+  if (!initialObstaclesClient.call(req, res))
+  {
+    ROS_INFO("Failed to call initial obstacle pose client.");
+    return;
+  }
+  ROS_INFO("Size of localization obstacles: %lu", res.localizationObstacles.size());
+  ROS_INFO("Size of navigation obstacles: %lu", res.navigationObstacles.size());
+  if (!res.localizationObstacles.empty())
+  {
+    //Determine whether the localization obstacle list needs to be expanded to include a previously-unseen obstacle
+    int maxID = 0;
+    for (unsigned int i = 0; i < res.localizationObstacles.size(); i ++)
+    {
+      if (res.localizationObstacles[i].id > maxID)
+        maxID = res.localizationObstacles[i].id;
+    }
+    if (maxID >= localizationObstacles.size())
+      localizationObstacles.resize(maxID + 1);
+    for (unsigned int i = 0; i < res.localizationObstacles.size(); i ++)
+    {
+      localizationObstacles[res.localizationObstacles[i].id].polygons = res.localizationObstacles[i].polygons;
+    }
+    updateReceived = true;
+  }
+  if (!res.navigationObstacles.empty())
+  {
+    //Determine whether the navigation obstacle list needs to be expanded to include a previously-unseen obstacle
+    int maxID = 0;
+    for (unsigned int i = 0; i < res.navigationObstacles.size(); i++)
+    {
+      if (res.navigationObstacles[i].id > maxID)
+        maxID = res.navigationObstacles[i].id;
+    }
+    if (maxID >= navigationObstacles.size())
+      navigationObstacles.resize(maxID + 1);
+    for (unsigned int i = 0; i < res.navigationObstacles.size(); i++)
+    {
+      navigationObstacles[res.navigationObstacles[i].id].polygons = res.navigationObstacles[i].polygons;
+    }
+    updateReceived = true;
+  }
 }
 
 void FurnitureLayer::updateFurnitureCallback(const carl_navigation::Obstacles::ConstPtr &obs)

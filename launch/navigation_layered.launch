@@ -1,0 +1,12 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+  Version: November 19, 2014
+-->
+
+<launch>
+  <include file="$(find carl_navigation)/launch/navigation_dynamic_furniture.launch" />
+
+  <node pkg="rail_ceiling" name="furniture_tracker" type="furniture_tracker" output="screen">
+    <param name="read_initial_poses" value="true" />
+  </node>
+</launch>
