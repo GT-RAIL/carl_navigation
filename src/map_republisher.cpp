@@ -1,9 +1,19 @@
+/**
+* \file map_republisher.cpp
+* \brief Combines a static map with obstacle information.
+*
+* Adds obstacles to a static map and republishes the map for localization purposes.
+*
+* \author David Kent, WPI - davidkent@wpi.edu
+* \date October 24, 2014
+*/
+
 #include "carl_navigation/map_republisher.h"
 
 MapRepublisher::MapRepublisher()
 {
   mapSubscriber = n.subscribe("map_server/map", 1, &MapRepublisher::staticMapCallback, this);
-  obstacleGridSubscriber = n.subscribe("/move_base/global_costmap/furniture/furniture_layer/obstacle_grid", 1,
+  obstacleGridSubscriber = n.subscribe("furniture_layer/obstacle_grid", 1,
                                        &MapRepublisher::obstacleCallback, this);
 
   mapPublisher = n.advertise<nav_msgs::OccupancyGrid>("map", 1);

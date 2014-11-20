@@ -4,7 +4,7 @@ project(carl_navigation)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS actionlib actionlib_msgs costmap_2d dynamic_reconfigure geometry_msgs message_generation move_base_msgs nav_msgs roscpp roslib std_msgs)
+find_package(catkin REQUIRED COMPONENTS actionlib actionlib_msgs costmap_2d dynamic_reconfigure geometry_msgs message_generation move_base_msgs nav_msgs rail_ceiling roscpp roslib std_msgs)
 find_package(PkgConfig)
 
 #######################################
@@ -14,13 +14,6 @@ find_package(PkgConfig)
 add_message_files(
   FILES
   BlockedCells.msg
-  Obstacle.msg
-  Obstacles.msg
-)
-
-add_service_files(
-  FILES
-  GetAllObstacles.srv
 )
 
 ## Generate actions in the 'action' folder

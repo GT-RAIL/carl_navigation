@@ -11,14 +11,15 @@
 
 #ifndef FURNITURE_LAYER_H_
 #define FURNITURE_LAYER_H_
-#include <ros/ros.h>
+#include <carl_navigation/BlockedCells.h>
 #include <costmap_2d/layer.h>
 #include <costmap_2d/layered_costmap.h>
 #include <costmap_2d/GenericPluginConfig.h>
 #include <dynamic_reconfigure/server.h>
-#include <carl_navigation/Obstacles.h>
 #include <nav_msgs/OccupancyGrid.h>
-#include <carl_navigation/BlockedCells.h>
+#include <ros/ros.h>
+#include <rail_ceiling/GetAllObstacles.h>
+#include <rail_ceiling/Obstacles.h>
 
 namespace furniture_layer_namespace
 {
@@ -47,8 +48,14 @@ private:
   *
   * @param obs list of obstacle polygons with associated ids
   */
-  void updateFurnitureCallback(const carl_navigation::Obstacles::ConstPtr &obs);
+  void updateFurnitureCallback(const rail_ceiling::Obstacles::ConstPtr &obs);
 
+  /**
+  * \brief update map with initial positions of furniture obstacles
+  *
+  * Any updates from a furniture tracking node that occur before navigation is started will also be received using
+  * this function.
+  */
   void getInitialObstacles();
 
   ros::NodeHandle n;
@@ -58,9 +65,9 @@ private:
 
   ros::ServiceClient initialObstaclesClient;
   
-  bool updateReceived;
-  std::vector<carl_navigation::Obstacle> navigationObstacles; //obstacle list for the navigation map
-  std::vector<carl_navigation::Obstacle> localizationObstacles; //obstacle list for the localization map
+  bool updateReceived; //flag for when a furniture position update is received
+  std::vector<rail_ceiling::Obstacle> navigationObstacles; //obstacle list for the navigation map
+  std::vector<rail_ceiling::Obstacle> localizationObstacles; //obstacle list for the localization map
 
   //stored map bounds
   double prevMaxX;

@@ -1,6 +1,16 @@
+/*!
+ * \file furniture_layer.cpp
+ * \brief Costmap layer for representing moveable furniture.
+ *
+ * Furniture includes both a navigation footprint for use in path planning, and a localization footprint that represents
+ * what will be seen on CARL's laser scan.
+ *
+ * \author David Kent, WPI - davidkent@wpi.edu
+ * \date October 22, 2014
+ */
+
 #include <carl_navigation/furniture_layer.h>
 #include <pluginlib/class_list_macros.h>
-#include <carl_navigation/GetAllObstacles.h>
 
 PLUGINLIB_EXPORT_CLASS(furniture_layer_namespace::FurnitureLayer, costmap_2d::Layer)
 
@@ -36,26 +46,24 @@ void FurnitureLayer::onInitialize()
   localizationObstacles.clear();
   navigationObstacles.clear();
 
-  initialObstaclesClient = n.serviceClient<carl_navigation::GetAllObstacles>("furniture_tracker/getAllPoses");
+  initialObstaclesClient = n.serviceClient<rail_ceiling::GetAllObstacles>("furniture_tracker/getAllPoses");
   initialObstaclesClient.waitForExistence();
   this->getInitialObstacles();
 
-  obstacleSubscriber = nh.subscribe<carl_navigation::Obstacles>("update_furniture_layer", 1, &FurnitureLayer::updateFurnitureCallback, this);
+  obstacleSubscriber = n.subscribe<rail_ceiling::Obstacles>("furniture_layer/update_obstacles", 1, &FurnitureLayer::updateFurnitureCallback, this);
 
-  localizationGridPublisher = nh.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
+  localizationGridPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
 }
 
 void FurnitureLayer::getInitialObstacles()
 {
-  carl_navigation::GetAllObstaclesRequest req;
-  carl_navigation::GetAllObstaclesResponse res;
+  rail_ceiling::GetAllObstaclesRequest req;
+  rail_ceiling::GetAllObstaclesResponse res;
   if (!initialObstaclesClient.call(req, res))
   {
     ROS_INFO("Failed to call initial obstacle pose client.");
     return;
   }
-  ROS_INFO("Size of localization obstacles: %lu", res.localizationObstacles.size());
-  ROS_INFO("Size of navigation obstacles: %lu", res.navigationObstacles.size());
   if (!res.localizationObstacles.empty())
   {
     //Determine whether the localization obstacle list needs to be expanded to include a previously-unseen obstacle
@@ -92,7 +100,7 @@ void FurnitureLayer::getInitialObstacles()
   }
 }
 
-void FurnitureLayer::updateFurnitureCallback(const carl_navigation::Obstacles::ConstPtr &obs)
+void FurnitureLayer::updateFurnitureCallback(const rail_ceiling::Obstacles::ConstPtr &obs)
 {
   //update navigation obstacles
   if (!obs->navigationObstacles.empty())

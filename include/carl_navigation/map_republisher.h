@@ -7,9 +7,10 @@
  * \author David Kent, WPI - davidkent@wpi.edu
  * \date October 24, 2014
  */
-#include <ros/ros.h>
-#include <nav_msgs/GetMap.h>
+
 #include <carl_navigation/BlockedCells.h>
+#include <nav_msgs/GetMap.h>
+#include <ros/ros.h>
 
 class MapRepublisher
 {
