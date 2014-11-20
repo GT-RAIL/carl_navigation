@@ -46,13 +46,13 @@ void FurnitureLayer::onInitialize()
   localizationObstacles.clear();
   navigationObstacles.clear();
 
+  localizationGridPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
+
   initialObstaclesClient = n.serviceClient<rail_ceiling::GetAllObstacles>("furniture_tracker/getAllPoses");
   initialObstaclesClient.waitForExistence();
   this->getInitialObstacles();
 
   obstacleSubscriber = n.subscribe<rail_ceiling::Obstacles>("furniture_layer/update_obstacles", 1, &FurnitureLayer::updateFurnitureCallback, this);
-
-  localizationGridPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
 }
 
 void FurnitureLayer::getInitialObstacles()

@@ -7,7 +7,7 @@ global_costmap:
    footprint_padding: 0.05
    static_layer: {map_topic: /map}
    furniture: {update_frequency: 1.0}
-   inflation_layer: {inflation_radius: .45}
+   inflation_layer: {inflation_radius: .5}
    
    plugins:
    - {name: static_layer, type: 'costmap_2d::StaticLayer'}
