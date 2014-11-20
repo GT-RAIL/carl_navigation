@@ -71,7 +71,7 @@ target_link_libraries(map_republisher ${catkin_LIBRARIES})
 add_library(furniture_layer src/furniture_layer.cpp)
 
 add_dependencies(rail_lab_location_server ${PROJECT_NAME}_gencpp)
-add_dependencies(furniture_layer ${PROJECT_NAME}_gencpp)
+add_dependencies(furniture_layer ${PROJECT_NAME}_gencpp rail_ceiling_gencpp)
 add_dependencies(map_republisher ${PROJECT_NAME}_gencpp)
 
 #############
