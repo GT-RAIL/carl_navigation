@@ -79,8 +79,9 @@ add_dependencies(map_republisher ${PROJECT_NAME}_gencpp)
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS rail_lab_location_server
+install(TARGETS rail_lab_location_server map_republisher furniture_layer
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
 ## Copy header files

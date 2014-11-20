@@ -270,9 +270,14 @@ void FurnitureLayer::updateBounds(double robot_x, double robot_y, double robot_y
   carl_navigation::BlockedCells grid;
   grid.edgeCells = edgePoints;
   grid.blockedCells = filledPoints;
-  localizationGridPublisher.publish(grid);
+  if (localizationGridPublisher.getNumSubscribers() > 0)
+  {
+    localizationGridPublisher.publish(grid);
 
-  updateReceived = false;
+    updateReceived = false;
+  }
+  else
+    ROS_INFO("No subscribers for localizationGridPublisher yet, will republish obstacles shortly...");
 }
 
 
