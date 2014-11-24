@@ -7,6 +7,7 @@ global_costmap:
    footprint_padding: 0.05
    static_layer: {map_topic: /map}
    furniture: {update_frequency: 1.0}
+   furniture_local: {enabled: true}
    inflation_layer: {inflation_radius: .5}
    
    plugins:

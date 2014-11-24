@@ -2,4 +2,7 @@
   <class type="furniture_layer_namespace::FurnitureLayer" base_class_type="costmap_2d::Layer">
     <description>TODO</description>
   </class>
+  <class type="furniture_layer_namespace::FurnitureLayerLocal" base_class_type="costmap_2d::Layer">
+    <description>TODO</description>
+  </class>
 </library>

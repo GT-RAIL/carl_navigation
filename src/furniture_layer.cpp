@@ -13,6 +13,7 @@
 #include <pluginlib/class_list_macros.h>
 
 PLUGINLIB_EXPORT_CLASS(furniture_layer_namespace::FurnitureLayer, costmap_2d::Layer)
+PLUGINLIB_EXPORT_CLASS(furniture_layer_namespace::FurnitureLayerLocal, costmap_2d::Layer)
 
 using costmap_2d::LETHAL_OBSTACLE;
 using costmap_2d::NO_INFORMATION;
@@ -47,6 +48,7 @@ void FurnitureLayer::onInitialize()
   navigationObstacles.clear();
 
   localizationGridPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
+  localObstaclesPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/local_obstacle_grid", 1);
 
   initialObstaclesClient = n.serviceClient<rail_ceiling::GetAllObstacles>("furniture_tracker/getAllPoses");
   initialObstaclesClient.waitForExistence();
@@ -172,6 +174,7 @@ void FurnitureLayer::updateBounds(double robot_x, double robot_y, double robot_y
   //add polygons from the localization obstacle polygon list and adjust bounds based on polygon vertices
   vector<geometry_msgs::Point> filledPoints;
   vector<geometry_msgs::Point> edgePoints;
+  vector<geometry_msgs::PointStamped> localObstacles;
   for (unsigned int i = 0; i < localizationObstacles.size(); i ++)
   {
     for (unsigned int j = 0; j < localizationObstacles[i].polygons.size(); j ++)
@@ -253,6 +256,19 @@ void FurnitureLayer::updateBounds(double robot_x, double robot_y, double robot_y
         {
           ROS_INFO("Failed to fill a navigation polygon");
         }
+        else
+        {
+          //populate points for local map obstacles
+          vector<costmap_2d::MapLocation> filledCells;
+          convexFillCells(vertices, filledCells);
+          for (unsigned int k = 0; k < filledCells.size(); k++)
+          {
+            geometry_msgs::PointStamped point;
+            point.header.frame_id = "map";
+            mapToWorld((int)filledCells[k].x, (int)filledCells[k].y, point.point.x, point.point.y);
+            localObstacles.push_back(point);
+          }
+        }
       }
     }
   }
@@ -278,8 +294,26 @@ void FurnitureLayer::updateBounds(double robot_x, double robot_y, double robot_y
   }
   else
     ROS_INFO("No subscribers for localizationGridPublisher yet, will republish obstacles shortly...");
-}
 
+  if (localObstaclesPublisher.getNumSubscribers() > 0)
+  {
+    carl_navigation::BlockedCells localObstaclesMsg;
+    localObstaclesMsg.blockedCells.resize(localObstacles.size());
+
+    for (unsigned int i = 0; i < localObstacles.size(); i ++)
+    {
+      localObstaclesMsg.blockedCells[i] = localObstacles[i].point;
+    }
+
+    localObstaclesPublisher.publish(localObstaclesMsg);
+  }
+  else
+  {
+    ROS_INFO("No local map subscribing, will republish obstacles shortly...");
+    updateReceived = true;
+  }
+
+}
 
 void FurnitureLayer::updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j)
 {
@@ -296,6 +330,100 @@ void FurnitureLayer::updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, 
         continue;
       master_grid.setCost(i, j, costmap_[index]);
     }
+  }
+}
+
+
+
+FurnitureLayerLocal::FurnitureLayerLocal() {}
+
+void FurnitureLayerLocal::onInitialize()
+{
+  ros::NodeHandle nh("~/" + name_);
+  current_ = true;
+  default_value_ = NO_INFORMATION;
+  matchSize();
+
+  dsrv_ = new dynamic_reconfigure::Server<costmap_2d::GenericPluginConfig>(nh);
+  dynamic_reconfigure::Server<costmap_2d::GenericPluginConfig>::CallbackType cb = boost::bind(
+      &FurnitureLayerLocal::reconfigureCB, this, _1, _2);
+  dsrv_->setCallback(cb);
+
+  prevMaxX = std::numeric_limits<double>::min();
+  prevMaxY = std::numeric_limits<double>::min();
+  prevMinX = std::numeric_limits<double>::max();
+  prevMinY = std::numeric_limits<double>::max();
+
+  obstaclePointsSubscriber = n.subscribe<carl_navigation::BlockedCells>("furniture_layer/local_obstacle_grid", 1, &FurnitureLayerLocal::updateObstaclePointsCallback, this);
+}
+
+void FurnitureLayerLocal::updateObstaclePointsCallback(const carl_navigation::BlockedCells::ConstPtr &obs)
+{
+  //update navigation obstacles
+  if (!obs->blockedCells.empty())
+  {
+    obstaclePoints.clear();
+    obstaclePoints = obs->blockedCells;
+  }
+  transformedPoints.clear();
+  transformedPoints.resize(obstaclePoints.size());
+}
+
+void FurnitureLayerLocal::matchSize()
+{
+  Costmap2D* master = layered_costmap_->getCostmap();
+  resizeMap(master->getSizeInCellsX(), master->getSizeInCellsY(), master->getResolution(),
+      master->getOriginX(), master->getOriginY());
+}
+
+void FurnitureLayerLocal::reconfigureCB(costmap_2d::GenericPluginConfig &config, uint32_t level)
+{
+  enabled_ = config.enabled;
+}
+
+void FurnitureLayerLocal::updateBounds(double robot_x, double robot_y, double robot_yaw, double *min_x, double *min_y, double *max_x, double *max_y)
+{
+  if (!enabled_)
+    return;
+
+  resetMap(0, 0, getSizeInCellsX(), getSizeInCellsY());
+
+  for (unsigned int i = 0; i < obstaclePoints.size(); i ++)
+  {
+    geometry_msgs::PointStamped inputPoint;
+    inputPoint.header.frame_id = "map";
+    inputPoint.point = obstaclePoints[i];
+    geometry_msgs::PointStamped transformedPoint;
+    tfListener.transformPoint("odom", inputPoint, transformedPoint);
+    transformedPoints[i] = transformedPoint.point;
+    //add some padding so the inflated portion of the obstacles gets cleared as well
+    *min_x = min(*min_x, obstaclePoints[i].x - 1.0);
+    *min_y = min(*min_y, obstaclePoints[i].y - 1.0);
+    *max_x = max(*max_x, obstaclePoints[i].x + 1.0);
+    *max_y = max(*max_y, obstaclePoints[i].y + 1.0);
+  }
+
+  *min_x = std::min(std::min(*min_x, mark_x), prevMinX);
+  *min_y = std::min(std::min(*min_y, mark_y), prevMinY);
+  *max_x = std::max(std::max(*max_x, mark_x), prevMaxX);
+  *max_y = std::max(std::max(*max_y, mark_y), prevMaxY);
+  prevMinX = *min_x;
+  prevMinY = *min_y;
+  prevMaxX = *max_x;
+  prevMaxY = *max_y;
+}
+
+
+void FurnitureLayerLocal::updateCosts(costmap_2d::Costmap2D& master_grid, int min_i, int min_j, int max_i, int max_j)
+{
+  if (!enabled_)
+    return;
+
+  for (unsigned int i = 0; i < transformedPoints.size(); i ++)
+  {
+    unsigned int mx, my;
+    if (master_grid.worldToMap(transformedPoints[i].x, transformedPoints[i].y, mx, my))
+      master_grid.setCost(mx, my, LETHAL_OBSTACLE);
   }
 }
 

@@ -1,0 +1,27 @@
+local_costmap:
+   global_frame: odom
+   robot_base_frame: base_footprint
+   update_frequency: 30.0
+   publish_frequency: 30.0
+   static_map: false
+   rolling_window: true
+   width: 5.0
+   height: 5.0
+   resolution: 0.05
+   transform_tolerance: 0.5
+   footprint_padding: 0.05
+
+   furniture_local: {enabled: true}
+   inflation_layer: {enabled: true}
+   obstacle_layer:
+    combination_method: 1
+    enabled: true
+    laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true, sensor_frame: hokuyo_link}
+    observation_sources: laser_scan_sensor
+    obstacle_range: 2.5
+    raytrace_range: 3.0
+
+   plugins:
+   - {name: furniture_local, type: 'furniture_layer_namespace::FurnitureLayerLocal'}
+   - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
+   - {name: inflation_layer, type: 'costmap_2d::InflationLayer'}
