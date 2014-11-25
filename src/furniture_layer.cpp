@@ -50,7 +50,7 @@ void FurnitureLayer::onInitialize()
   localizationGridPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/obstacle_grid", 1);
   localObstaclesPublisher = n.advertise<carl_navigation::BlockedCells>("furniture_layer/local_obstacle_grid", 1);
 
-  initialObstaclesClient = n.serviceClient<rail_ceiling::GetAllObstacles>("furniture_tracker/getAllPoses");
+  initialObstaclesClient = n.serviceClient<rail_ceiling::GetAllObstacles>("furniture_tracker/get_all_poses");
   initialObstaclesClient.waitForExistence();
   this->getInitialObstacles();
 
