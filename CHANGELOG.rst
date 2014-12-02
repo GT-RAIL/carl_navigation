@@ -2,6 +2,21 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.8 (2014-12-02)
+------------------
+* Update .travis.yml
+* travis now pull source
+* topic name update
+* propagated furniture obstacle information to local costmap as well as the global costmap
+* message generation dependency
+* Fixed a race condition on geting the initial furniture positions
+* Adjustments to inflation amount and publisher/subscriber initialization order for the furniture_layer
+* Organization/Documentation
+* Navigation can now be launched to use layered costmaps for localization and navigation based on fixed furniture positions, marker-tracked furniture positions, or the original non-layered version.
+* Documentation and cleanup
+* Layered costmap implementation for dynamic furniture tracking
+* Contributors: David Kent, Russell Toris
+
 0.0.7 (2014-10-23)
 ------------------
 * navigation marker fix
