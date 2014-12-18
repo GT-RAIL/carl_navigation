@@ -2,6 +2,15 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.9 (2014-12-18)
+------------------
+* rviz update
+* launches ilab URDF
+* Update .travis.yml
+* Update .travis.yml
+* Update .travis.yml
+* Contributors: Russell Toris
+
 0.0.8 (2014-12-02)
 ------------------
 * Update .travis.yml
