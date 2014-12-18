@@ -51,6 +51,7 @@
   <run_depend>roslib</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>yaml-cpp</run_depend>
+  <run_depend>rail_collada_models</run_depend>
 
   <export>
     <costmap_2d plugin="${prefix}/config/costmap_plugins.xml" />

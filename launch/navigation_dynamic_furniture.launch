@@ -12,7 +12,10 @@
   <node pkg="map_server" name="map_server" type="map_server" ns="$(arg map_namespace)" args="$(arg rail_lab_map)" />
 
   <!-- Map republisher -->
-  <node pkg="carl_navigation" name="map_republisher" type="map_republisher"  />
+  <node pkg="carl_navigation" name="map_republisher" type="map_republisher" />
+
+  <!-- RAIL lab URDF -->
+  <include file="$(find rail_collada_models)/launch/ilab.launch" />
 
   <!-- Navigation -->
   <include file="$(find carl_navigation)/launch/amcl.launch" />
