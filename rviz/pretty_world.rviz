@@ -473,6 +473,14 @@ Visualization Manager:
       Show Visual Aids: false
       Update Topic: /parking_markers/update
       Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /rail_segmentation/markers
+      Name: MarkerArray
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -497,22 +505,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 10.2665
+      Distance: 10.3714
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 2.83501
-        Y: 3.62539
-        Z: -0.490789
+        X: 3.18391
+        Y: 3.76292
+        Z: -0.414396
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.860398
+      Pitch: 0.750398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.43358
+      Yaw: 5.56358
     Saved: ~
 Window Geometry:
   Displays:

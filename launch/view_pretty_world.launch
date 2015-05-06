@@ -1,3 +1,6 @@
-<launch> 
+<launch>
+  <!-- Panel Params -->
+  <arg name="segment_service" default="/rail_segmentation/segment" />
+  <param name="/rviz/segment_panel/segment_service" type="str" value="$(arg segment_service)" />
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find carl_navigation)/rviz/pretty_world.rviz" output="screen" />
 </launch>
