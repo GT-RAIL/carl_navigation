@@ -2,6 +2,12 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.11 (2015-05-06)
+-------------------
+* pretty world rviz
+* pretty world rviz
+* Contributors: Russell Toris
+
 0.0.10 (2015-03-27)
 -------------------
 * pretty rviz view added
