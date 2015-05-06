@@ -45,7 +45,7 @@
   <run_depend>nav_msgs</run_depend>
   <run_depend>navfn</run_depend>
   <run_depend>rail_maps</run_depend>
-  <run_depend>rail_ceiling</run_depend>
+  <run_depend>actionlib</run_depend>
   <run_depend>robot_pose_publisher</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>roslib</run_depend>
