@@ -2,6 +2,9 @@
 int32 KITCHEN_TABLE=1
 int32 KITCHEN_DRAWERS=2
 int32 FRIDGE=3
+int32 COFFEE_TABLE=4
+int32 INTERACTION_1=5
+int32 INTERACTION_2=6
 
 # Goal definition
 int32 location
