@@ -2,6 +2,13 @@
 Changelog for package carl_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.12 (2015-08-18)
+-------------------
+* reverted changelog
+* changelog updated
+* Added some locations
+* Contributors: David Kent, Russell Toris
+
 0.0.11 (2015-05-06)
 -------------------
 * pretty world rviz
