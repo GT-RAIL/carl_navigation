@@ -21,12 +21,12 @@ install:
   - mkdir -p /tmp/ws/src
   - ln -s `pwd` /tmp/ws/src/package
   - cd /tmp/ws/src
-  - git clone https://github.com/WPI-RAIL/carl_bot.git
+  - git clone https://github.com/GT-RAIL/carl_bot.git
   - git clone https://github.com/RIVeR-Lab/wpi_jaco.git
   - git clone https://github.com/sniekum/ar_track_alvar_msgs.git
   - git clone https://github.com/sniekum/ar_track_alvar.git -b indigo-devel
-  - git clone https://github.com/WPI-RAIL/rail_ceiling.git
-  - git clone https://github.com/WPI-RAIL/rail_collada_models.git
+  - git clone https://github.com/GT-RAIL/rail_ceiling.git
+  - git clone https://github.com/GT-RAIL/rail_collada_models.git
   - mkdir carl_description
   - mkdir jaco_description
   - mv carl_bot/carl_description/* carl_description/

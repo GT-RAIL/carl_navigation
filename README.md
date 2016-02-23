@@ -1,4 +1,4 @@
-carl_navigation [![Build Status](https://api.travis-ci.org/WPI-RAIL/carl_navigation.png)](https://travis-ci.org/WPI-RAIL/carl_navigation)
+carl_navigation [![Build Status](https://api.travis-ci.org/GT-RAIL/carl_navigation.png)](https://travis-ci.org/GT-RAIL/carl_navigation)
 ===============
 
 #### Autonomous Navigation Capabilities for CARL
