@@ -4,7 +4,7 @@
  *
  * A location has a pose, name, and ID.
  *
- * \author Russell Toris, WPI - rctoris@wpi.edu
+ * \author Russell Toris, WPI - russell.toris@gmail.com
  * \date September 19, 2014
  */
 

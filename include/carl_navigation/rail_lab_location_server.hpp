@@ -4,7 +4,7 @@
  *
  * rail_lab_location_server creates an action server with pre-defined goal locations for CARL navigation.
  *
- * \author Russell Toris, WPI - rctoris@wpi.edu
+ * \author Russell Toris, WPI - russell.toris@gmail.com
  * \date September 19, 2014
  */
 
