@@ -4,8 +4,8 @@
   <version>0.0.12</version>
   <description>Autonomous Navigation Capabilities for CARL</description>
   
-  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
-  <author email="rctoris@wpi.edu">Russell Toris</author>
+  <maintainer email="dekent@gatech.edu">David Kent</maintainer>
+  <author email="russell.toris@gmail.com">Russell Toris</author>
   <author email="dekent@gatech.edu">David Kent</author>
   
   <license>BSD</license>
